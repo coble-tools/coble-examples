@@ -276,7 +276,7 @@ panel_figure <- function(group, levels, fills, stats, title, subtitle, caption,
 
   ggsave(paste0(file, ".pdf"), plot = p_labelled, width = width, height = height,
          limitsize = FALSE)
-  ggsave(paste0(file, ".png"), plot = p_base, width = width, height = height, dpi = 300,
+  ggsave(paste0(file, ".png"), plot = p_base, width = width, height = height, dpi = 1200,
          limitsize = FALSE)
   message("Wrote ", file, ".pdf (labelled) and .png (no stat labels)")
   write_legend(file, title, subtitle, caption)

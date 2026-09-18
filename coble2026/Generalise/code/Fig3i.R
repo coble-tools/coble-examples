@@ -18,9 +18,11 @@ PLOT_GENES <- c("Lpl", "Acbd7", "Cd36", "Olah")
 CELLTYPES_BACH <- c("Lp", "Avd")
 EXCLUDE_COND   <- "WTOld"
 
-# GSE164017 stages pooled into "Pregnancy": all four non-lactation stages,
-# for closer parity with Bach's own pool (Nulliparous+4.5dG+9.5dG+14.5dG)
-GSE_PREGNANCY_STAGES <- c("Pre-puberty", "Adult virgin", "12.5dG", "18.5dG")
+# GSE164017 stages pooled into "Pregnancy": all non-lactation stages,
+# for closer parity with Bach's own pool (Nulliparous+4.5dG+9.5dG+14.5dG).
+# Pre-puberty removed: no longer prepared by prepare_GSE164017.R (FVB/NJ-only
+# restriction dropped it entirely).
+GSE_PREGNANCY_STAGES <- c("Adult virgin", "12.5dG", "18.5dG")
 GSE_LACTATION_STAGE  <- "Lactation"
 
 dir.create(RESULTS_DIR, showWarnings = FALSE, recursive = TRUE)
@@ -31,10 +33,8 @@ PAL_RDS_OBJ <- file.path(PROC_DATA_DIR, "gse164017_prepared.rds")
 
 # File output
 FIG_BASE  <- file.path(RESULTS_DIR, "Fig2i_bach")
-FIG2_BASE <- file.path(RESULTS_DIR, "Supp_bach_nulliparous")
 FIG3_BASE <- file.path(RESULTS_DIR, "Supp_bach_timeseries_by_gene")
 STATS_CSV <- file.path(RESULTS_DIR, "corr_2i_bach.csv")
-STATS2_CSV <- file.path(RESULTS_DIR, "corr_supp_bach_nulliparous.csv")
 STATS3_CSV <- file.path(RESULTS_DIR, "corr_supp_bach_timeseries.csv")
 
 # ---------------------------------------------------------------------------
@@ -167,7 +167,8 @@ write.csv(stats, STATS_CSV, row.names = FALSE)
 
 # ---------------------------------------------------------------------------
 # PLOTTING -- genes as facet columns (labels along the top), rows are the
-# three pooled groups
+# three pooled groups. PDF carries the stat annotations (rho/detected/anchor/
+# n_cells); PNG is the bare scatter with none of that text.
 # ---------------------------------------------------------------------------
 
 GG_34 <- utils::packageVersion("ggplot2") >= "3.4.0"
@@ -220,35 +221,14 @@ panel_figure <- function(group, levels, fills, stats, title, subtitle, caption,
   # column automatically, same trick the earlier scripts used the other way.
   wash <- data.frame(row = factor(levels, levels = levels))
 
-  p <- ggplot(long, aes(x = Csn2Expr, y = Expr)) +
+  # Base plot: everything shared between the labelled (PDF) and unlabelled
+  # (PNG) versions -- no rho/detected/anchor/n_cells text yet.
+  p_base <- ggplot(long, aes(x = Csn2Expr, y = Expr)) +
     geom_rect(data = wash, aes(fill = row), inherit.aes = FALSE,
               xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf, alpha = 0.35) +
     geom_point(size = 0.4, colour = "black", alpha = 0.40) +
     geom_lm_fit(method = "lm", formula = y ~ x, colour = "grey95",
                 linewidth = 1.1, se = FALSE) +
-    geom_lab(data = lab_ok, aes(label = Correlation), parse = TRUE,
-             x = -Inf, y = Inf, hjust = -0.08, vjust = 1.15, size = 2.9,
-             fontface = "bold", colour = "black", fill = "white", alpha = 0.92,
-             label.size = 0, label.padding = unit(0.10, "lines"),
-             inherit.aes = FALSE) +
-    (if (nrow(lab_na))
-       geom_lab(data = lab_na, aes(label = Correlation), x = -Inf, y = Inf,
-                hjust = -0.05, vjust = 1.15, size = 2.5, fontface = "italic",
-                colour = "grey30", fill = "white", alpha = 0.92,
-                label.size = 0, label.padding = unit(0.10, "lines"),
-                inherit.aes = FALSE) else NULL) +
-    geom_lab(data = lab, aes(label = Detected), x = -Inf, y = Inf,
-             hjust = -0.06, vjust = 2.75, size = 2.5, colour = "grey20",
-             fill = "white", alpha = 0.92, label.size = 0,
-             label.padding = unit(0.10, "lines"), inherit.aes = FALSE) +
-    geom_lab(data = lab, aes(label = Anchor), x = -Inf, y = Inf,
-             hjust = -0.06, vjust = 3.75, size = 2.5, colour = "grey20",
-             fill = "white", alpha = 0.92, label.size = 0,
-             label.padding = unit(0.10, "lines"), inherit.aes = FALSE) +
-    geom_lab(data = lab, aes(label = n_cells), x = -Inf, y = Inf,
-             hjust = -0.06, vjust = 4.75, size = 2.5, colour = "grey20",
-             fill = "white", alpha = 0.92, label.size = 0,
-             label.padding = unit(0.10, "lines"), inherit.aes = FALSE) +
     facet_grid(row ~ gene, scales = "fixed") +
     scale_fill_manual(values = fills) +
     (if (!is.null(x_breaks)) scale_x_continuous(breaks = x_breaks) else NULL) +
@@ -265,12 +245,42 @@ panel_figure <- function(group, levels, fills, stats, title, subtitle, caption,
           axis.line  = el_line(linewidth = 0.7),
           axis.ticks = el_line(linewidth = 0.7))
 
-  ggsave(paste0(file, ".pdf"), plot = p, width = width, height = height, limitsize = FALSE)
-  ggsave(paste0(file, ".png"), plot = p, width = width, height = height, dpi = 300,
+  label_layers <- list(
+    geom_lab(data = lab_ok, aes(label = Correlation), parse = TRUE,
+             x = -Inf, y = Inf, hjust = -0.08, vjust = 1.15, size = 2.9,
+             fontface = "bold", colour = "black", fill = "white", alpha = 0.92,
+             label.size = 0, label.padding = unit(0.10, "lines"),
+             inherit.aes = FALSE),
+    if (nrow(lab_na))
+      geom_lab(data = lab_na, aes(label = Correlation), x = -Inf, y = Inf,
+               hjust = -0.05, vjust = 1.15, size = 2.5, fontface = "italic",
+               colour = "grey30", fill = "white", alpha = 0.92,
+               label.size = 0, label.padding = unit(0.10, "lines"),
+               inherit.aes = FALSE) else NULL,
+    geom_lab(data = lab, aes(label = Detected), x = -Inf, y = Inf,
+             hjust = -0.06, vjust = 2.75, size = 2.5, colour = "grey20",
+             fill = "white", alpha = 0.92, label.size = 0,
+             label.padding = unit(0.10, "lines"), inherit.aes = FALSE),
+    geom_lab(data = lab, aes(label = Anchor), x = -Inf, y = Inf,
+             hjust = -0.06, vjust = 3.75, size = 2.5, colour = "grey20",
+             fill = "white", alpha = 0.92, label.size = 0,
+             label.padding = unit(0.10, "lines"), inherit.aes = FALSE),
+    geom_lab(data = lab, aes(label = n_cells), x = -Inf, y = Inf,
+             hjust = -0.06, vjust = 4.75, size = 2.5, colour = "grey20",
+             fill = "white", alpha = 0.92, label.size = 0,
+             label.padding = unit(0.10, "lines"), inherit.aes = FALSE)
+  )
+
+  p_labelled <- p_base
+  for (ly in label_layers) if (!is.null(ly)) p_labelled <- p_labelled + ly
+
+  ggsave(paste0(file, ".pdf"), plot = p_labelled, width = width, height = height,
          limitsize = FALSE)
-  message("Wrote ", file, ".pdf and .png")
+  ggsave(paste0(file, ".png"), plot = p_base, width = width, height = height, dpi = 300,
+         limitsize = FALSE)
+  message("Wrote ", file, ".pdf (labelled) and .png (no stat labels)")
   write_legend(file, title, subtitle, caption)
-  invisible(p)
+  invisible(p_labelled)
 }
 
 # Three distinct washes, one per row -- not a gradient, since these three
@@ -290,98 +300,23 @@ panel_figure(
     "pregnancy arm (Nulliparous/4.5dG/9.5dG/14.5dG pooled), their published logcounts. Rows 2-3: ",
     "GSE164017, 10X Genomics scRNA-seq of mouse mammary gland, cells restricted to ",
     "luminal-progenitor and alveolar compartments (marker-panel argmax, see ",
-    "prepare_GSE164017.R); row 2 pools Pre-puberty, Adult virgin, 12.5dG and 18.5dG, matching ",
-    "the way Bach's own row pools its baseline in with the rest; row 3 is Lactation alone. The ",
-    "two datasets come from different labs, mice and pipelines and are not jointly normalised. ",
-    "Spearman's rho throughout; grey text gives the percentage of cells expressing the target ",
-    "gene and Csn2, and the total cells in each panel."),
+    "prepare_GSE164017.R); row 2 pools Adult virgin, 12.5dG and 18.5dG, matching the way Bach's ",
+    "own row pools its baseline in with the rest; row 3 is Lactation alone. The two datasets come ",
+    "from different labs, mice and pipelines and are not jointly normalised. Spearman's rho ",
+    "throughout; grey text (PDF only) gives the percentage of cells expressing the target gene ",
+    "and Csn2, and the total cells in each panel."),
   file = FIG_BASE, width = 2.3 * length(PLOT_GENES) + 1.5, height = 2.3 * length(ROWS) + 1.8,
   gene_set = PLOT_GENES)
 
 # ---------------------------------------------------------------------------
-# SECOND PLOT -- Bach Nulliparous vs GSE164017 Pre-puberty, same panel shape
-# ---------------------------------------------------------------------------
-
-load_bach_nulliparous <- function() {
-  sce <- readRDS(BACH_RDS_OBJ)
-  cd  <- SummarizedExperiment::colData(sce)
-
-  keep <- cd$CellTypesFinal %in% CELLTYPES_BACH & cd$Condition == "WTYoung" &
-          cd$Experiment == "Pregnancy"
-  message(sprintf("  Bach object: %d cells -> %d Lp/Avd Nulliparous cells", ncol(sce), sum(keep)))
-
-  ids <- if (!is.null(colnames(sce))) colnames(sce)[keep]
-         else paste0(cd$SampleID[keep], "_", cd$barcode[keep])
-
-  logc <- SummarizedExperiment::assay(sce, "logcounts")[, keep, drop = FALSE]
-  colnames(logc) <- make.unique(as.character(ids))
-
-  meta <- data.frame(
-    row    = "Nulliparous (Bach)",
-    sample = as.character(if ("SampleID" %in% colnames(cd)) cd$SampleID[keep] else "Bach"),
-    stringsAsFactors = FALSE
-  )
-  list(logcounts = logc, meta = meta)
-}
-
-load_gse164017_prepuberty <- function() {
-  if (!file.exists(PAL_RDS_OBJ)) stop("missing: ", PAL_RDS_OBJ, " -- run prepare_GSE164017.R first")
-  x <- readRDS(PAL_RDS_OBJ)
-  keep <- x$condition == "Pre-puberty"
-  message(sprintf("  GSE164017: %d cells -> %d Pre-puberty cells", length(x$condition), sum(keep)))
-  meta <- data.frame(row = "Pre-puberty (GSE164017)", sample = x$sample[keep],
-                     stringsAsFactors = FALSE)
-  list(logcounts = x$logcounts[, keep, drop = FALSE], meta = meta)
-}
-
-bach_null  <- load_bach_nulliparous()
-gse_prepub <- load_gse164017_prepuberty()
-
-genes2 <- intersect(rownames(bach_null$logcounts), rownames(gse_prepub$logcounts))
-message(sprintf("Genes shared by the two datasets: %d", length(genes2)))
-if (!ANCHOR %in% genes2) stop("anchor gene not shared between datasets: ", ANCHOR)
-
-PLOT_GENES2 <- intersect(PLOT_GENES, genes2)
-if (length(PLOT_GENES2) < length(PLOT_GENES))
-  warning("PLOT_GENES2: dropping genes absent from one of the two datasets", call. = FALSE)
-
-expr <- cbind(bach_null$logcounts[genes2, , drop = FALSE],
-              gse_prepub$logcounts[genes2, , drop = FALSE])
-meta <- rbind(bach_null$meta, gse_prepub$meta)
-stopifnot(ncol(expr) == nrow(meta))
-
-ROWS2 <- c("Nulliparous (Bach)", "Pre-puberty (GSE164017)")
-
-stats2 <- rho_table(meta$row, ROWS2, PLOT_GENES2)
-show(stats2, "rho", "Bach Nulliparous vs GSE164017 Pre-puberty: Spearman rho with Csn2", PLOT_GENES2)
-
-write.csv(stats2, STATS2_CSV, row.names = FALSE)
-
-fills2 <- setNames(c(brewer.pal(5, "GnBu")[3], brewer.pal(6, "Oranges")[2]), ROWS2)
-
-panel_figure(
-  group = meta$row, levels = ROWS2, fills = fills2, stats = stats2,
-  title = "Fatty-acid coupling to Csn2 before differentiation begins",
-  subtitle = "Bach's Nulliparous baseline vs GSE164017 Pre-puberty",
-  caption = paste0(
-    "Row 1: Bach et al. 2021 (Nat Commun 12:1502), their Lp/Avd cells, Condition == WTYoung ",
-    "(young nulliparous, n = 3 mice), their published logcounts. Row 2: GSE164017, 10X Genomics ",
-    "scRNA-seq of mouse mammary gland, Pre-puberty stage only, cells restricted to ",
-    "luminal-progenitor and alveolar compartments (marker-panel argmax, see ",
-    "prepare_GSE164017.R). Both are expected to be true baselines with little or no Csn2 ",
-    "detection, so rho is likely undefined in both rows; this panel shows the raw scatter for ",
-    "comparison rather than a correlation claim. The two datasets come from different labs, mice ",
-    "and pipelines and are not jointly normalised."),
-  file = FIG2_BASE, width = 2.3 * length(PLOT_GENES2) + 1.5, height = 2.3 * length(ROWS2) + 1.8,
-  gene_set = PLOT_GENES2, x_breaks = c(-0.025, 0, 0.025))
-
-# ---------------------------------------------------------------------------
-# THIRD PLOT -- Bach's 3 pregnancy timepoints, then all 5 GSE164017 stages
+# SECOND PLOT -- Bach's 4 timepoints, then all 5 GSE164017 stages
+# (previously the third of three plots; the Nulliparous-vs-Pre-puberty plot
+# that used to sit here has been removed, since Pre-puberty is no longer
+# prepared by prepare_GSE164017.R)
 # ---------------------------------------------------------------------------
 
 BACH_TIMEPOINTS3 <- c("Nulliparous", "4.5dG", "9.5dG", "14.5dG")
-GSE_STAGE_ORDER3 <- c("Pre-puberty", "Adult virgin", "12.5dG", "18.5dG", "Lactation",
-                      "Post-involution")
+GSE_STAGE_ORDER3 <- c("Adult virgin", "12.5dG", "18.5dG", "Lactation", "Post-involution")
 
 load_bach_three_timepoints <- function() {
   sce <- readRDS(BACH_RDS_OBJ)
@@ -444,13 +379,13 @@ ROWS3      <- c(BACH_ROWS3, GSE_ROWS3)
 message("Rows: ", paste(intersect(ROWS3, unique(meta$row)), collapse = ", "))
 
 stats3 <- rho_table(meta$row, ROWS3, PLOT_GENES3)
-show(stats3, "rho", "Bach's 3 timepoints + all 5 GSE164017 stages: Spearman rho with Csn2",
+show(stats3, "rho", "Bach's 4 timepoints + all 5 GSE164017 stages: Spearman rho with Csn2",
      PLOT_GENES3)
 
 
 write.csv(stats3, STATS3_CSV, row.names = FALSE)
 
-# Blues for Bach's 3 timepoints, orange-to-yellow for GSE164017's 5 stages.
+# Blues for Bach's 4 timepoints, orange-to-yellow for GSE164017's 5 stages.
 col_bach3 <- colorRampPalette(brewer.pal(5, "GnBu")[2:5])(length(BACH_ROWS3))
 col_gse3  <- colorRampPalette(c("#D2691E", "#FFD700"))(length(GSE_ROWS3))
 fills3    <- setNames(c(col_bach3, col_gse3), ROWS3)
@@ -458,16 +393,16 @@ fills3    <- setNames(c(col_bach3, col_gse3), ROWS3)
 panel_figure(
   group = meta$row, levels = ROWS3, fills = fills3, stats = stats3,
   title = "Fatty-acid coupling to Csn2, full time series, gene by gene",
-  subtitle = "All four Bach timepoints then all six GSE164017 stages",
+  subtitle = "All four Bach timepoints then all five GSE164017 stages",
   caption = paste0(
     "Rows 1-4: Bach et al. 2021 (Nat Commun 12:1502), their Lp/Avd cells, ",
-    "Nulliparous/4.5dG/9.5dG/14.5dG, their published logcounts. Rows 5-10: GSE164017, 10X ",
+    "Nulliparous/4.5dG/9.5dG/14.5dG, their published logcounts. Rows 5-9: GSE164017, 10X ",
     "Genomics scRNA-seq of mouse mammary gland across life stages, cells restricted to ",
     "luminal-progenitor and alveolar compartments (marker-panel argmax, see ",
-    "prepare_GSE164017.R); Post-involution (row 10) is a single mouse. The two datasets come ",
+    "prepare_GSE164017.R); Post-involution (row 9) is a single mouse. The two datasets come ",
     "from different labs, mice and pipelines and are not jointly normalised, so treat this as two ",
     "independent series shown side by side rather than one merged trajectory. Spearman's rho ",
-    "throughout; grey text gives the percentage of cells expressing the target gene and Csn2, and ",
-    "the total cells in each panel."),
+    "throughout; grey text (PDF only) gives the percentage of cells expressing the target gene ",
+    "and Csn2, and the total cells in each panel."),
   file = FIG3_BASE, width = 2.3 * length(PLOT_GENES3) + 1.5, height = 2.3 * length(ROWS3) + 1.8,
   gene_set = PLOT_GENES3)

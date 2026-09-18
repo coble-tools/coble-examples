@@ -81,22 +81,22 @@ QC_DATA_DIR   <- "data_qc"
 
 # Which stages to prepare. Keys are labels used downstream; values are regular
 # expressions matched against the sample name in the GEO filenames.
-# Run once and read the "samples discovered" listing to see every stem
-# available (embryonic, prepuberty, puberty TEB/duct, lactation, involution...)
-# then widen these if you want more stages.
 #
-# "Pre-puberty" and "Early postnatal" were originally one pattern ("^Pre-"),
-# which silently pooled two different GEO titles together: Pre-BL6 is titled
-# "Pre-puberty" but Pre-D5-BL6 is titled "Early postnatal" -- a distinct,
-# earlier developmental stage. Split into two exact, non-overlapping patterns
-# so neither stage is contaminated by the other.
+# RESTRICTED TO FVB/NJ MICE ONLY. Every sample below has been individually
+#   confirmed FVB/NJ via its own GSM record.
+#   "Adult virgin" narrowed from "^Adult" to "^Adult-FVB", dropping Adult-BL6
+#   (C57BL/6) and Adult-SW (Swiss) -- keeps Adult-FVB, Adult-FVB-P7,
+#   Adult-FVB-D12, all confirmed FVB/NJ.
+#   "Pre-puberty" (Pre-BL6, confirmed C57BL/6) and "Early postnatal"
+#   (Pre-D5-BL6, C57BL/6 by name) removed entirely.
+#   12.5dG (Preg-D12, Preg-D12-G), 18.5dG (Preg-D18, Preg-D18-B4), Lactation
+#   (Lac-D10, Lac-D10-D6) and Post-involution (PI-W3) are all confirmed
+#   FVB/NJ.
 STAGE_PATTERNS <- c(
-  "Adult virgin"    = "^Adult",
+  "Adult virgin"    = "^Adult-FVB",
   "12.5dG"          = "^Preg-?D12",
   "18.5dG"          = "^Preg-?D18",
   "Lactation"       = "^Lac",
-  "Early postnatal" = "^Pre-D5",
-  "Pre-puberty"     = "^Pre-BL6$",
   "Post-involution" = "^PI-"
 )
 

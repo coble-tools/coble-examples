@@ -2,7 +2,9 @@
 
 Given this prompt:
 ```
-I want you to build an environment so that I can replicate a computational result from a publication, using the COBLE tool. I want you to use the environment internally to create the results and then give me the coble file and the script so I can verify them. Here is the doumentation for COBLE and the repo: 
+I want you to build an environment so that I can replicate a computational result from a publication, using the COBLE tool.
+I want you to use the environment internally to create the results and then give me the coble file and the script so I can verify them.
+Here is the doumentation for COBLE and the repo: 
 
 https://github.com/coble-tools/coble
 https://coble-tools.github.io/coble/

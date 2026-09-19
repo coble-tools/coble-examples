@@ -1,7 +1,7 @@
 # Claude Science Reproduction of Bach et al
 
 Given this prompt:
-```
+```text
 I want you to build an environment so that I can replicate a computational result from a publication, using the COBLE tool.
 I want you to use the environment internally to create the results and then give me the coble file and the script so I can verify them.
 Here is the doumentation for COBLE and the repo: 
@@ -13,6 +13,7 @@ And here is an example:
 https://github.com/coble-tools/coble-examples/blob/main/coble2026/Reproduce/cbl/.coble.cblI would like you to make an environment to replicate this paper's code.
 https://www.nature.com/articles/s41467-021-21783-3
 ```
+
 The coble recipe and the code scripts were created by Claude Science and run by me on my local machine - fully runnable environment from the coble definition and the Claude Science code scripts ran without error.
 
 Everything below is written by Claude Science and all other files in this folder are created by Claude Science.

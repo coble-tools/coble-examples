@@ -11,7 +11,7 @@ And here is an example:
 https://github.com/coble-tools/coble-examples/blob/main/coble2026/Reproduce/cbl/.coble.cblI would like you to make an environment to replicate this paper's code.
 https://www.nature.com/articles/s41467-021-21783-3
 ```
-The covble scrit and the code scripts were created by Claude Science and run by me on my local machine - fully runnable environment from the coble definition and the Claude Science code scripts ran without error.
+The coble recipe and the code scripts were created by Claude Science and run by me on my local machine - fully runnable environment from the coble definition and the Claude Science code scripts ran without error.
 
 Everything below is written by Claude Science and all other files in this folder are created by Claude Science.
 

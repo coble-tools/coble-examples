@@ -1,6 +1,6 @@
 #######################################
-# coble build --recipe Figure04/cbl/.coble.cbl --env zheng-gen --rebuild
-# coble build --recipe Figure04/cbl/.coble.cbl --env zheng-en --containers docker,singularity --validate validate.sh
+# coble build --recipe Figure04/cbl/recipe.cbl --env zheng-gen --rebuild
+# coble build --recipe Figure04/cbl/recipe.cbl --env zheng-en --containers docker,singularity --validate validate.sh
 #######################################
 coble:
   - environment: zheng02

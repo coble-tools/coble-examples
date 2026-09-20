@@ -1,6 +1,6 @@
 #######################################
-# coble build --recipe Figure02/cbl/.coble.cbl --env scherer-rep --rebuild
-# coble build --recipe Figure02/cbl/.coble.cbl --env scherer-rep --containers docker,singularity --validate validate.sh
+# coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --rebuild
+# coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --containers docker,singularity --validate validate.sh
 #######################################
 coble:
   - environment: scherer-rep

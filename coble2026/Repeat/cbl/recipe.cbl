@@ -1,6 +1,6 @@
 #######################################
-# coble build --recipe Figure01/cbl/.coble.cbl --env zhang-rec --rebuild
-# coble build --recipe Figure01/cbl/.coble.cbl --env zhang-rec --rebuild --containers docker,singularity --validate validate.sh
+# coble build --recipe Figure01/cbl/recipe.cbl --env zhang-rec --rebuild
+# coble build --recipe Figure01/cbl/recipe.cbl --env zhang-rec --rebuild --containers docker,singularity --validate validate.sh
 #######################################
 coble:
   - environment: zhang-rec

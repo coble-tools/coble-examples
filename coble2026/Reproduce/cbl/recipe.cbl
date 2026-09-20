@@ -6,11 +6,14 @@ coble:
   - environment: scherer-rep
 comments:
   This recipe is for the environment used in Scherer et al. 2025,
+  
 channels:
   - bioconda
   - conda-forge
-compilers:
+
+flags:
   - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
+
 conda:
   - r-base=4.2.2
 r-conda:

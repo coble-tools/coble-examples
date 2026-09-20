@@ -10,12 +10,13 @@ Build directly from:
 SHARED/analysis/RachaelNatrajan/
 TNBC_PDX_residual/snrseq/logs/
 2023-08-21-Session-Info-3_plot_metamarkers_oc.txt
+
 channels:
   - bioconda
   - conda-forge
-compilers:
-  - cran-repo: https://packagemanager.posit.co/cran/2024-04-01
+
 flags:
+  - cran-repo: https://packagemanager.posit.co/cran/2024-04-01
   - ncpus: 4
 
 conda:

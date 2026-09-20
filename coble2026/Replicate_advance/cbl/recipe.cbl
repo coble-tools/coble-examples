@@ -9,10 +9,11 @@ Zheng2017 with modern toolchain for extended analysis
 channels:
   - bioconda
   - conda-forge
-compilers:
-  - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
+
 flags:
+  - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
   - ncpus: 1
+  
 conda:
   - r-base=4.5.2
 r-package:

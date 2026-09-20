@@ -6,13 +6,15 @@ coble:
   - environment: zheng2017
 comments:
 Zheng2017 with modern toolchain
+
 channels:
   - bioconda
   - conda-forge
-compilers:
-  - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
+
 flags:
+  - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
   - ncpus: 1
+  
 conda:
   - r-base=4.5.2
 r-package:

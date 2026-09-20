@@ -2,18 +2,18 @@
 
 #####################################################
 # COBLE:recipe, (c) ICR 2026
-# Capture date: 2026-06-10
-# Capture time: 17:25:14 BST
-# Captured by: ralcraft
+# Capture date: 2026-09-20
+# Capture time: 14:19:15 BST
+# Captured by: rachel.alcraft
 #####################################################
 # source bashrc for conda
 if [ -f ~/.bash_profile ]; then source ~/.bash_profile; elif [ -f ~/.bashrc ]; then source ~/.bashrc; elif command -v conda > /dev/null 2>&1; then eval "$(conda shell.bash hook)"; fi
-# Using conda executable conda: /home/ralcraft/miniforge3/bin/conda
-# Using conda alias conda: /home/ralcraft/miniforge3/bin/conda
+# Using conda executable conda: /Users/rachel.alcraft/miniforge3/bin/conda
+# Using conda alias conda: /Users/rachel.alcraft/miniforge3/bin/conda
 #####################################################
 
-conda env remove --name velton -y 2>/dev/null || true
-conda create --no-default-packages --name velton -y
+conda env remove --name scherer-rep -y 2>/dev/null || true
+conda create --no-default-packages --name scherer-rep -y
 export PYTHONNOUSERSITE=1
 unset PYTHONPATH
 # clean up conda cache first
@@ -22,7 +22,7 @@ conda  clean --all -y --force-pkgs-dirs
 conda deactivate | true
 conda deactivate | true
 # activate environment
-conda activate velton
+conda activate scherer-rep
 
 export PYTHONNOUSERSITE=1
 export | grep PYTHONNOUSERSITE
@@ -34,7 +34,8 @@ conda config --env --add channels conda-forge
 
 # INSTALL SECTION FOR CONDA
 #######################################
-# coble build --recipe cbl/.coble.cbl --env velton --rebuild
+# coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --rebuild
+# coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --containers docker,singularity --validate validate.sh
 #######################################
 # comments:
 # compilers:
@@ -87,11 +88,11 @@ conda install -y --solver=libmamba --no-update-deps \
 # End of recipe
 # Validation script setup
 echo "#!/usr/bin/env bash" > ${CONDA_PREFIX}/bin/validate.sh
-echo 'echo "COBLE validation: No script has been specified for velton environment."' >> ${CONDA_PREFIX}/bin/validate.sh
+echo 'echo "COBLE validation: No script has been specified for scherer-rep environment."' >> ${CONDA_PREFIX}/bin/validate.sh
 chmod +x ${CONDA_PREFIX}/bin/validate.sh
 chmod +x ${CONDA_PREFIX}/bin/validate.sh
 mkdir -p ${CONDA_PREFIX}/coble-recipe
-cp cbl/.coble.cbl ${CONDA_PREFIX}/coble-recipe
-cp /home/ralcraft/miniforge3/bin/coble ${CONDA_PREFIX}/bin/
-cp /home/ralcraft/miniforge3/bin/coble-* ${CONDA_PREFIX}/bin/
+cp Reproduce/cbl/recipe.cbl ${CONDA_PREFIX}/coble-recipe
+cp /Users/rachel.alcraft/miniforge3/envs/r_452/bin/coble ${CONDA_PREFIX}/bin/
+cp /Users/rachel.alcraft/miniforge3/envs/r_452/bin/coble-* ${CONDA_PREFIX}/bin/
 

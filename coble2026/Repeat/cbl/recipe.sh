@@ -2,18 +2,18 @@
 
 #####################################################
 # COBLE:recipe, (c) ICR 2026
-# Capture date: 2026-06-10
-# Capture time: 19:50:00 BST
-# Captured by: ralcraft
+# Capture date: 2026-09-20
+# Capture time: 14:17:16 BST
+# Captured by: rachel.alcraft
 #####################################################
 # source bashrc for conda
 if [ -f ~/.bash_profile ]; then source ~/.bash_profile; elif [ -f ~/.bashrc ]; then source ~/.bashrc; elif command -v conda > /dev/null 2>&1; then eval "$(conda shell.bash hook)"; fi
-# Using conda executable conda: /home/ralcraft/miniforge3/condabin/conda
-# Using conda alias conda: /home/ralcraft/miniforge3/condabin/conda
+# Using conda executable conda: /Users/rachel.alcraft/miniforge3/bin/conda
+# Using conda alias conda: /Users/rachel.alcraft/miniforge3/bin/conda
 #####################################################
 
-conda env remove --name tnbc -y 2>/dev/null || true
-conda create --no-default-packages --name tnbc -y
+conda env remove --name zhang-rec -y 2>/dev/null || true
+conda create --no-default-packages --name zhang-rec -y
 export PYTHONNOUSERSITE=1
 unset PYTHONPATH
 # clean up conda cache first
@@ -22,7 +22,7 @@ conda  clean --all -y --force-pkgs-dirs
 conda deactivate | true
 conda deactivate | true
 # activate environment
-conda activate tnbc
+conda activate zhang-rec
 
 export PYTHONNOUSERSITE=1
 export | grep PYTHONNOUSERSITE
@@ -34,7 +34,8 @@ conda config --env --add channels conda-forge
 
 # INSTALL SECTION FOR CONDA
 #######################################
-# coble build --recipe cbl/.coble.cbl --env tnbc --rebuild
+# coble build --recipe Figure01/cbl/recipe.cbl --env zhang-rec --rebuild
+# coble build --recipe Figure01/cbl/recipe.cbl --env zhang-rec --rebuild --containers docker,singularity --validate validate.sh
 #######################################
 # comments:
 # compilers:
@@ -256,18 +257,15 @@ host="git.icr.ac.uk", ref="main", dependencies=NA, upgrade="never")'
 Rscript -e 'Sys.setenv(GITLAB_PAT=Sys.getenv("GITLAB_PAT")); \
 remotes::install_gitlab("bcr_ds_team/bcrbioinformatics/Resources/R_Packages/BCN.singlecell.utilities", \
 host="git.icr.ac.uk", ref="main", dependencies=NA, upgrade="never")'
-#Rscript -e 'remove.packages("BCN.singlecell.utilities")'
-#Rscript -e 'remove.packages("irlba")'
-#Rscript -e 'remotes::install_version("irlba", version = "2.3.3", repos = "http://cran.r-project.org")'
 
 # End of recipe
 # Validation script setup
 echo "#!/usr/bin/env bash" > ${CONDA_PREFIX}/bin/validate.sh
-echo 'echo "COBLE validation: No script has been specified for tnbc environment."' >> ${CONDA_PREFIX}/bin/validate.sh
+echo 'echo "COBLE validation: No script has been specified for zhang-rec environment."' >> ${CONDA_PREFIX}/bin/validate.sh
 chmod +x ${CONDA_PREFIX}/bin/validate.sh
 chmod +x ${CONDA_PREFIX}/bin/validate.sh
 mkdir -p ${CONDA_PREFIX}/coble-recipe
-cp cbl/.coble.cbl ${CONDA_PREFIX}/coble-recipe
-cp /home/ralcraft/miniforge3/envs/velton/bin/coble ${CONDA_PREFIX}/bin/
-cp /home/ralcraft/miniforge3/envs/velton/bin/coble-* ${CONDA_PREFIX}/bin/
+cp Repeat/cbl/recipe.cbl ${CONDA_PREFIX}/coble-recipe
+cp /Users/rachel.alcraft/miniforge3/envs/r_452/bin/coble ${CONDA_PREFIX}/bin/
+cp /Users/rachel.alcraft/miniforge3/envs/r_452/bin/coble-* ${CONDA_PREFIX}/bin/
 

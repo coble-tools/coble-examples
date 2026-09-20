@@ -41,13 +41,11 @@ channels:
 flags:
   - dependencies: NA
   - priority: strict
+  # Requires Rosetta installed once beforehand: softwareupdate --install-rosetta
+  - export<os=darwin,arch=arm64>: CONDA_SUBDIR=osx-64
 
 languages:
   - r-base=3.6.3@conda-forge
-
-flags:
-  # Requires Rosetta installed once beforehand: softwareupdate --install-rosetta
-  - export<os=darwin,arch=arm64>: CONDA_SUBDIR=osx-64
 
 compilers:
   - cran-repo: https://packagemanager.posit.co/cran/2021-03-25

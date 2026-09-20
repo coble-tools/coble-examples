@@ -9,6 +9,7 @@
 #######################################
 coble:
   - environment: bach-rep
+
 comments:
   Environment to reproduce Figure 1 of Bach et al. 2021 from the authors' own
   code (MarioniLab/Tumorigenesis2018, src/DownstreamAnalysis/Figure1.Rmd) and
@@ -43,12 +44,11 @@ flags:
   - priority: strict
   # Requires Rosetta installed once beforehand: softwareupdate --install-rosetta
   - export<os=darwin,arch=arm64>: CONDA_SUBDIR=osx-64
+  - cran-repo: https://packagemanager.posit.co/cran/2021-03-25
 
 languages:
   - r-base=3.6.3@conda-forge
 
-compilers:
-  - cran-repo: https://packagemanager.posit.co/cran/2021-03-25
 # The bioconda r36 binaries are linked against libopenblasp-r0.3.7.dylib by
 # soname. Left free, the solver takes the current libopenblas and edgeR.dylib
 # (hence scran) fails to dyn.load. Pin it before anything Bioconductor lands.

@@ -16,7 +16,7 @@ languages:
   - r-base=4.1.0@conda-forge
   - python=3.12.3@conda-forge
 flags:
-  - compile-tools: true
+  - compile: tools=true
   - dependencies: false
   - priority: flexible
 

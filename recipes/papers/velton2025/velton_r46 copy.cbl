@@ -11,9 +11,9 @@ channels:
   - bioconda
   - conda-forge
 
-compilers:
+flags:
   - cran-repo: https://packagemanager.posit.co/cran/latest
-  - compile-tools: 15.2
+  - compile: tools=15.2
 
 #flags:
 #  - ncpus: 8

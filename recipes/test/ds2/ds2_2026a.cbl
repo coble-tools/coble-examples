@@ -11,8 +11,8 @@ channels:
   - conda-forge
 languages:
   - r-base=4.5.2
-compilers:
-  - compile-tools: true
+flags:
+  - compile: tools=true
   - cran-repo: https://packagemanager.posit.co/cran/2026-04-01
 #flags:
 #  - system-tools: true

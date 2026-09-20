@@ -12,7 +12,7 @@ languages:
   - r-base=4.3.1@conda-forge
 flags:
   - dependencies: NA  
-  - compile-tools: 13.1  
+  - compile: tools=13.1  
 r-conda:  
   - tidyverse
 r-package:

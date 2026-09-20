@@ -5,16 +5,14 @@ coble:
   - environment: coble-env
 channels:    
   - r
-compilers:    
+flags:    
   - cran-repo: https://packagemanager.posit.co/cran/2020-04-01  
 languages:
  - r-base=3.6.0@override:r,defaults
 bash:
   - conda config --env --remove channels r
-compilers:  
-  - compile-tools: true
-flags:      
-  - system-tools: false
+flags:  
+  - compile: tools=true     
   - channel: bioconda
   - channel: conda-forge   
 bash:

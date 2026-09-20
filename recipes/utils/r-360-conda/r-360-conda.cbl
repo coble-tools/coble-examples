@@ -6,17 +6,17 @@ coble:
 channels:    
   - defaults
   - r
-compilers:    
+flags:    
   - cran-repo: https://packagemanager.posit.co/cran/2020-04-01  
 languages:
  - r-base=3.6.0@override:r,defaults
 bash:
   - conda config --env --remove channels r
   - conda config --env --remove channels defaults
-compilers:  
-  - compile-tools: true
+flags:  
+  - compile: tools=true
 flags:      
-  - system-tools: false
+  - compile: system=false
   - channel: bioconda
   - channel: conda-forge   
 bash:

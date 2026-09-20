@@ -9,7 +9,7 @@ comments:
 channels:
   - bioconda
   - conda-forge
-compilers:
+flags:
   - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
 conda:
   - r-base=4.2.2

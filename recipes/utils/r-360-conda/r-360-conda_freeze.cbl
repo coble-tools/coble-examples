@@ -15,7 +15,7 @@ channels:
 languages:
   - r-base=3.6.0@r
 flags:
-  - compile-tools: true
+  - compile: tools=true
   - dependencies: false
   - priority: flexible
 

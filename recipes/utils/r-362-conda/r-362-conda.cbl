@@ -6,10 +6,10 @@ coble:
 channels:    
   - bioconda
   - conda-forge
-compilers:    
+flags:    
   - cran-repo: https://packagemanager.posit.co/cran/2020-04-01  
 flags:            
-  - compile-version: 7.5
+  - compile: version=7.5
 languages:
   - r-base=3.6.2
 conda:

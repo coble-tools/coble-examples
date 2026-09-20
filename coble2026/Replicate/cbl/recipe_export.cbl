@@ -15,7 +15,7 @@ channels:
 languages:
   - r-base=4.5.2@conda-forge
 flags:
-  - compile-tools: true
+  - compile: tools=true
   - dependencies: false
   - priority: flexible
 

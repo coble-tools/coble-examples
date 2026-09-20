@@ -13,7 +13,7 @@ TNBC_PDX_residual/snrseq/logs/
 channels:
   - bioconda
   - conda-forge
-compilers:
+flags:
   - cran-repo: https://packagemanager.posit.co/cran/2024-04-01
 flags:
   - ncpus: 4

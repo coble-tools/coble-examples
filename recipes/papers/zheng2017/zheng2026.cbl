@@ -10,7 +10,7 @@ Zheng2017 with modern toolchain
 channels:
   - bioconda
   - conda-forge
-compilers:
+flags:
   - cran-repo: https://packagemanager.posit.co/cran/2025-10-10
 flags:
   - ncpus: 1

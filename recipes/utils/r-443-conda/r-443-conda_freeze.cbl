@@ -16,7 +16,7 @@ languages:
   - r-base=4.4.3@conda-forge
   - python=3.12.12@conda-forge
 flags:
-  - compile-tools: true
+  - compile: tools=true
   - dependencies: false
   - priority: flexible
   - export: OTEL_SDK_DISABLED="true"

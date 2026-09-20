@@ -9,9 +9,8 @@ Internal ICR-BCDS
 channels:
   - bioconda
   - conda-forge
-compilers:
-  - cran-repo: https://packagemanager.posit.co/cran/2024-04-01
 flags:
+  - cran-repo: https://packagemanager.posit.co/cran/2024-04-01
   - ncpus: 4
 conda:
   - r-base=4.1.0

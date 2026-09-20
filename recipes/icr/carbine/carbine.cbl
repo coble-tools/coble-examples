@@ -11,14 +11,14 @@ channels:
 languages:
   - r-base=4.4.3
   - python=3.12
-compilers:
-  - compile-tools: true
+flags:
+  - compile: tools=true
   - cran-repo: https://packagemanager.posit.co/cran/2026-02-01
 bash:
   - R CMD javareconf
 flags:
-  - compile-tools: True
-  - system-tools: False
+  - compile: tools=True
+  - compile: system=False
   - export: QT_QPA_PLATFORM=offscreen
   - export: OTEL_SDK_DISABLED=true
   - export: R_OTEL_DISABLED=true

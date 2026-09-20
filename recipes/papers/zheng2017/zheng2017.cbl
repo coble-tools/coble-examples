@@ -25,7 +25,7 @@ channels:
   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/free
   - https://repo.anaconda.com/pkgs/main
-compilers:
+flags:
   - cran-repo: https://packagemanager.posit.co/cran/2017-10-10
 flags:
   - ncpus: 1

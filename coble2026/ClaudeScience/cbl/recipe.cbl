@@ -33,6 +33,7 @@ comments:
   that renders the decorative repository animation fancyUMAP.gif. It is not a
   panel of Figure 1 and is omitted from the replication script.
 
+
 channels:
   - bioconda
   - conda-forge
@@ -43,6 +44,10 @@ flags:
 
 languages:
   - r-base=3.6.3@conda-forge
+
+flags:
+  # Requires Rosetta installed once beforehand: softwareupdate --install-rosetta
+  - export<os=darwin,arch=arm64>: CONDA_SUBDIR=osx-64
 
 compilers:
   - cran-repo: https://packagemanager.posit.co/cran/2021-03-25

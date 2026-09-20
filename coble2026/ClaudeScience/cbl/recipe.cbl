@@ -44,37 +44,39 @@ flags:
   - priority: strict
   # Requires Rosetta installed once beforehand: softwareupdate --install-rosetta
   - export<os=darwin,arch=arm64>: CONDA_SUBDIR=osx-64
-  - cran-repo: https://packagemanager.posit.co/cran/2021-03-25
+
 
 languages:
   - r-base=3.6.3@conda-forge
 
+flags:
+  - cran-repo: https://packagemanager.posit.co/cran/2021-03-25
+
 # The bioconda r36 binaries are linked against libopenblasp-r0.3.7.dylib by
 # soname. Left free, the solver takes the current libopenblas and edgeR.dylib
 # (hence scran) fails to dyn.load. Pin it before anything Bioconductor lands.
-
 conda:
   - libopenblas=0.3.7
+
 # bioconda's bioconductor-genomeinfodbdata post-link script fetches its data
 # tarball with `curl` and no -L. bioconductor.org has since moved to 302
 # redirects for package downloads, so that fetch quietly stores the redirect
 # page, the md5 check fails and the whole conda transaction aborts. Give curl
 # a config that follows redirects; scoped to this environment and this build.
-
 bash:
   mkdir -p $CONDA_PREFIX/etc/coble
   echo location > $CONDA_PREFIX/etc/coble/.curlrc
   export CURL_HOME=$CONDA_PREFIX/etc/coble
+
 # Bioconductor 3.10 -- the release that pairs with R 3.6.x, as in the
 # authors' Container/ListOfPackages.txt
-
 bioc-conda:
   - SingleCellExperiment=1.8.0
   - scater=1.14.0
   - scran=1.14.1
   - edgeR=3.28.0
-# CRAN, at the versions current when the paper was published
 
+# CRAN, at the versions current when the paper was published
 r-conda:
   - ggplot2=3.3.3
   - cowplot=1.1.1
@@ -86,14 +88,14 @@ r-conda:
   - ggthemes=4.2.4
   - Matrix=1.3_3
   - svglite=2.0.0
-# ggrastr's dependencies, taken from conda so that nothing is compiled
 
+# ggrastr's dependencies, taken from conda so that nothing is compiled
 r-conda:
   - Cairo=1.5_12.2
   - ggbeeswarm=0.6.0
   - png=0.1_7
   - ragg=0.4.0
-# ggrastr itself has no conda build for r36; taken from the CRAN archive
 
+# ggrastr itself has no conda build for r36; taken from the CRAN archive
 r-package:
   - ggrastr=0.2.3

@@ -1,73 +1,103 @@
 ------------------------------------------------
-[coble-create] Summary log started by rachel.alcraft on 2026-09-20 at 14:19:23 BST
+[coble-create] Summary log started by rachel.alcraft on 2026-09-21 at 16:31:47 BST
 ------------------------------------------------
 
-[coble-create] Start time: 2026-09-20 14:19:23 1/      82
+[coble-create] Start time: 2026-09-21 16:31:48 1/      84
 install: if [ -f ~/.bash_profile ]; then source ~/.bash_profile; elif [ -f ~/.bashrc ]; then source ~/.bashrc; elif command -v conda > /dev/null 2>&1; then eval "$(conda shell.bash hook)"; fi
-[coble-create] End time: 2026-09-20 14:19:27
-[coble-create] Duration: 2s
+[coble-create] End time: 2026-09-21 16:31:50
+[coble-create] Duration: 1s
 
-[coble-create] Start time: 2026-09-20 14:19:27 3/      82
+[coble-create] Start time: 2026-09-21 16:31:50 3/      84
 install: conda env remove --name scherer-rep -y 2>/dev/null || true
-[coble-create] End time: 2026-09-20 14:19:30
+[coble-create] End time: 2026-09-21 16:31:52
 [coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:19:30 5/      82
+[coble-create] Start time: 2026-09-21 16:31:52 5/      84
 install: conda create --no-default-packages --name scherer-rep -y
-[coble-create] End time: 2026-09-20 14:19:33
-[coble-create] Duration: 1s
-
-[coble-create] Start time: 2026-09-20 14:19:33 7/      82
-install: export PYTHONNOUSERSITE=1
-[coble-create] End time: 2026-09-20 14:19:35
+[coble-create] End time: 2026-09-21 16:31:53
 [coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:19:35 8/      82
+[coble-create] Start time: 2026-09-21 16:31:53 7/      84
+install: export PYTHONNOUSERSITE=1
+[coble-create] End time: 2026-09-21 16:31:55
+[coble-create] Duration: 1s
+
+[coble-create] Start time: 2026-09-21 16:31:55 8/      84
 install: unset PYTHONPATH
-[coble-create] End time: 2026-09-20 14:19:37
+[coble-create] End time: 2026-09-21 16:31:56
 [coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:19:37 9/      82
+[coble-create] Start time: 2026-09-21 16:31:56 9/      84
 install: conda  clean --all -y --force-pkgs-dirs
-[coble-create] End time: 2026-09-20 14:19:47
-[coble-create] Duration: 8s
-
-[coble-create] Start time: 2026-09-20 14:19:47 11/      82
-install: conda deactivate | true
-[coble-create] End time: 2026-09-20 14:19:50
+[coble-create] End time: 2026-09-21 16:31:58
 [coble-create] Duration: 1s
 
-[coble-create] Start time: 2026-09-20 14:19:50 12/      82
+[coble-create] Start time: 2026-09-21 16:31:58 11/      84
 install: conda deactivate | true
-[coble-create] End time: 2026-09-20 14:19:53
+[coble-create] End time: 2026-09-21 16:32:00
 [coble-create] Duration: 1s
 
-[coble-create] Start time: 2026-09-20 14:19:53 13/      82
+[coble-create] Start time: 2026-09-21 16:32:00 12/      84
+install: conda deactivate | true
+[coble-create] End time: 2026-09-21 16:32:02
+[coble-create] Duration: 0s
+
+[coble-create] Start time: 2026-09-21 16:32:02 13/      84
 install: conda activate scherer-rep
-[coble-create] End time: 2026-09-20 14:19:55
+[coble-create] End time: 2026-09-21 16:32:03
 [coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:19:55 14/      82
+[coble-create] Start time: 2026-09-21 16:32:03 14/      84
 install: export PYTHONNOUSERSITE=1
-[coble-create] End time: 2026-09-20 14:19:57
+[coble-create] End time: 2026-09-21 16:32:04
 [coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:19:57 15/      82
+[coble-create] Start time: 2026-09-21 16:32:04 15/      84
 install: export | grep PYTHONNOUSERSITE
-[coble-create] End time: 2026-09-20 14:19:59
+[coble-create] End time: 2026-09-21 16:32:06
 [coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:19:59 16/      82
-install: conda config --env --show channels | grep -q 'channels:' && conda config --env --remove-key channels || true
-[coble-create] End time: 2026-09-20 14:20:02
-[coble-create] Duration: 1s
+[coble-create] Start time: 2026-09-21 16:32:06 16/      84
+install: conda config --env --remove-key channels 2>/dev/null || true
+[coble-create] End time: 2026-09-21 16:32:08
+[coble-create] Duration: 0s
 
-[coble-create] Start time: 2026-09-20 14:20:02 18/      82
+[coble-create] Start time: 2026-09-21 16:32:08 18/      84
 install: conda config --env --set channel_priority strict
-[coble-create] End time: 2026-09-20 14:20:05
+[coble-create] End time: 2026-09-21 16:32:10
+[coble-create] Duration: 0s
+
+[coble-create] Start time: 2026-09-21 16:32:10 19/      84
+install: conda config --env --add channels bioconda
+[coble-create] End time: 2026-09-21 16:32:12
+[coble-create] Duration: 0s
+
+[coble-create] Start time: 2026-09-21 16:32:12 21/      84
+install: conda config --env --add channels conda-forge
+[coble-create] End time: 2026-09-21 16:32:14
+[coble-create] Duration: 0s
+
+[coble-create] Start time: 2026-09-21 16:32:14 23/      84
+install: Rscript -e 'options(repos=c(CRAN="https://packagemanager.posit.co/cran/2025-10-10"))'
+[coble-create] End time: 2026-09-21 16:32:16
 [coble-create] Duration: 1s
 
-[coble-create] Start time: 2026-09-20 14:20:05 19/      82
-install: conda config --env --add channels bioconda
-[coble-errors] Errors found (cmd_status=120, err_code=0), exiting due to --skip-errors flag
-[coble-create] End time: 2026-09-20 14:20:07
+[coble-create] Start time: 2026-09-21 16:32:16 26/      84
+install: conda install -y --solver=libmamba --no-update-deps  r-base=4.2.2 
+dep: # _r-mutex           conda-forge/noarch::_r-mutex-1.0.1-anacondar_1
+dep: # ca-certificates    conda-forge/noarch::ca-certificates-2026.7.22-hbd8a1cb_0
+dep: # compiler-rt_osx-a~ conda-forge/noarch::compiler-rt_osx-arm64-16.0.1-h30b49de_0
+dep: # font-ttf-dejavu-s~ conda-forge/noarch::font-ttf-dejavu-sans-mono-2.37-hab24e00_0
+dep: # font-ttf-inconsol~ conda-forge/noarch::font-ttf-inconsolata-3.000-h77eed37_0
+dep: # font-ttf-source-c~ conda-forge/noarch::font-ttf-source-code-pro-2.038-h77eed37_0
+dep: # font-ttf-ubuntu    conda-forge/noarch::font-ttf-ubuntu-0.83-h77eed37_3
+dep: # fonts-conda-ecosy~ conda-forge/noarch::fonts-conda-ecosystem-1-0
+dep: # fonts-conda-forge  conda-forge/noarch::fonts-conda-forge-1-hc364b38_1
+dep: # libgfortran-devel~ conda-forge/noarch::libgfortran-devel_osx-arm64-11.4.0-h81f2d5f_1
+[coble-create] End time: 2026-09-21 16:32:33
+[coble-create] Duration: 16s
+
+[coble-create] Start time: 2026-09-21 16:32:33 43/      84
+install: conda install -y --solver=libmamba --no-update-deps  'r-ggplot2=3.4.1'  'r-Seurat=4.3.0'  'r-ROCR=1.0'  'r-fossil=0.4.0'  'r-reshape2=1.4.4'  'r-RCurl'  'r-xml2'  'r-XML'  'r-locfit'  'r-corrplot'  'r-harmony'  'r-infotheo'  'r-caret'  'r-randomForest'  'r-uwot' 
+[coble-errors] Errors found (cmd_status=134, err_code=0), exiting due to --skip-errors flag
+[coble-create] End time: 2026-09-22 10:49:28

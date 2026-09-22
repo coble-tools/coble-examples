@@ -169,3 +169,7 @@ recipes/demos/tumorigenesis/data/sce_tumour_GB_03_mnn.rds
 recipes/demos/tumorigenesis/data/sce_tumour_GB_02_hvg.rds
 *.done
 *.delta
+coble2026/Replicate/data/all_pure_select_11types.rds
+coble2026/Replicate/data/*
+coble2026/Reproduce/results/*
+coble2026/Reproduce/data/*

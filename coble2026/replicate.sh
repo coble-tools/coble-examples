@@ -4,7 +4,7 @@
 
 ENV_MODE=$1
 source ~/.bashrc
-cd Fig2_PanelC
+cd Replicate
 
 echo "### 1. Downloading data from 10xgenomics and saving to data/ directory"
 mkdir -p data
@@ -18,4 +18,4 @@ fi
 sbatch code/plot.sh $ENV_MODE
 
 # Completed!
-echo "### 3. The batch has been submitted, the figures will be saved in the folder Fig2_PanelC/results/ ###"
+echo "### 3. The batch has been submitted, the figures will be saved in the folder results/ ###"

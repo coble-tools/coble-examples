@@ -16,17 +16,17 @@ conda install rachelsa::coble
 ``` 
 Then the coble environment can be built or singularity images downloaded as preferred with the following commands:
 ```bash
-bash _cbl_conda.sh
+bash cbl_conda.sh
 # OR
-bash _cbl_singularity.sh
+bash _bl_singularity.sh
 ```
 For each panel the figures can be running the relevant bash script - passng in conda, docker or singularity as preferred.
 ```bash
-bash a_recreate.sh
-bash b_reproduce.sh singularity
-bash c_replicate.sh singularity
-bash d_generalise.sh singularity
+bash repeat.sh
+bash reproduce.sh singularity
+bash replicate.sh singularity
+bash generalise.sh singularity
 ```
-`Note`, although the code is provided for all 4 panels, the first panel (a) is by definition designed to be run only at the ICR. This panel represents "recreate" - same inputs, same team. The "recreate" script is designed to be run on a repeated basis on the ICRs own hardware and is tuned for the IRC's High Performance Compute using slurm, for the ICRs memory partitions, and file structure. The results folder for panel a includes the time stamped results from the ICRs own runs. 
+`Note`, although the code is provided for all 4 panels, the first panel (a) is by definition designed to be run only at the ICR. This panel represents "repeat" - same inputs, same team. The "repeat" script is designed to be run on a repeated basis on the ICRs own hardware and is tuned for the IRC's High Performance Compute using slurm, for the ICRs memory partitions, and file structure. The results folder for panel a includes the time stamped results from the ICRs own runs. 
 
 The other panels (b, c and d) are designed to be run anywhere and the results are included in the results folder for each panel but can be recreated by anyone. Note that resources are required for them and they have been configured with HPC slurm. This can be adapted to run locally - where `sbatch` is used simply replace with `bash`.

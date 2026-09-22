@@ -4,7 +4,7 @@
 
 ENV_MODE=$1
 source ~/.bashrc
-cd Fig2_PanelD
+cd Generalise
 
 echo "### 1. Downloading data from 10xgenomics and saving to data/ directory"
 mkdir -p data

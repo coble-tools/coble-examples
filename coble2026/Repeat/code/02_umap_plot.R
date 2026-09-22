@@ -3,7 +3,7 @@
 # RAlcraft		2026-06-13
 #
 ### DESCRIPTION ###############################################################
-# Replication of ICR code for publication demonstration of `recreate``
+# Replication of ICR code for publication demonstration of `repeat`
 ### LIBRARIES #################################################################
 library("BCN.general.utilities");
 library("Seurat");
@@ -62,6 +62,14 @@ rae_print_msg("...loaded RDS");
 rae_print_msg("run umap...");
 seu <- RunUMAP(seu, dims = 1:umapdim, reduction = "pca", n.neighbors = 30, min.dist = 0.3);
 rae_print_msg("...done");
+################### save umap source data ################
+rae_print_msg("saving umap source data...");
+out_path_umap <- file.path(outpath, paste0("coble_umap_CIDER_sourcedata_", append_tag, ".csv"));
+umap_coords <- Embeddings(seu, "umap");
+out_df_umap <- data.frame(umap_coords, CellType = seu$seurat_clusters_chr);
+colnames(out_df_umap) <- c("umap_1", "umap_2", "CellType");
+write.csv(out_df_umap, out_path_umap, row.names = TRUE);
+rae_print_msg(paste("...saved to", out_path_umap));
 ################### make plot ################
 rae_print_msg("make.reduction.plot...");
 make.reduction.plot(
@@ -84,4 +92,3 @@ BCN.general.utilities::save.session.info(
 	directory = outpath
 );
 ################################################################
-

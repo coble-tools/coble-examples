@@ -1,6 +1,8 @@
 #
 # Copyright (c) 2016 10x Genomics, Inc. All rights reserved.
 #
+# change history
+# 2026-09-21	claude	added tsne source data csv save
 
 rm(list=ls()) # clear workspace
 # ----------------------------
@@ -83,6 +85,7 @@ pca_n_1000<-.do_propack(m_n_1000,50)
 cat("[", format(Sys.time()), "] ### generate 2-D tSNE embedding\n")
 tsne_n_1000<-Rtsne(pca_n_1000$pca,pca=F)
 tdf_n_1000<-data.frame(tsne_n_1000$Y)
+rownames(tdf_n_1000) <- rownames(m_n_1000)
 # ---------------------------------------------------------------------------------------------------------------------------
 # assign IDs by comparing the transcriptome profile of each cell to the reference profile from purified PBMC populations
 # this produces Fig. 3j in the manuscript
@@ -97,6 +100,14 @@ z_1000_11<-.compare_by_cor(m_filt,use_genes_n_ens[1:1000],purified_ref_11)
 test<-.reassign_pbmc_11(z_1000_11)
 cls_id<-factor(colnames(z_1000_11)[test])
 tdf_n_1000$cls_id<-cls_id
+################### save tsne source data ################
+cat("[", format(Sys.time()), "] ### saving tsne source data\n")
+out_path_tsne <- file.path(RES_DIR, "coble_fig3j_sourcedata.csv")
+out_df_tsne <- data.frame(tsne_1 = tdf_n_1000$X1, tsne_2 = tdf_n_1000$X2, CellType = tdf_n_1000$cls_id)
+rownames(out_df_tsne) <- rownames(tdf_n_1000)
+write.csv(out_df_tsne, out_path_tsne, row.names = TRUE)
+cat("[", format(Sys.time()), "] ### saved to", out_path_tsne, "\n")
+############################################################
 # adjust ordering of cells for plotting aesthetics
 tdf_mod <- tdf_n_1000[tdf_n_1000$cls_id!='CD4+/CD45RA+/CD25- Naive T',]
 tdf_mod <- rbind(tdf_mod,tdf_n_1000[tdf_n_1000$cls_id=='CD4+/CD45RA+/CD25- Naive T',])
@@ -115,6 +126,3 @@ si <- sessionInfo()
 cat("[", format(Sys.time()), "] Session info:\n")
 print(si)
 # ----------------------------------
-
-
-

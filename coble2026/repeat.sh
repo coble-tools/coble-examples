@@ -6,7 +6,7 @@
 # This sets up the dependency between the
 # jobs as they need different resources
 ###########################################
-cd Fig2_PanelA
+cd Repeat
 
 echo "Submitting job 1 (01_sct_pca.R)..."
 # Submit job 1, capture its job ID

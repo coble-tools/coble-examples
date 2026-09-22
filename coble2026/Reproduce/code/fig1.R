@@ -2,6 +2,9 @@
 # https://github.com/veltenlab/EPI-clone/blob/main/figures/Figure1/Figure1.html
 
 # Rscript Fig2_PanelB/code/fig1.R
+#
+# change history
+# 2026-09-21	claude	added source data csv saves for figs 1c, 1g, 1i, 1j
 
 source("code/source.R")
 
@@ -18,6 +21,16 @@ to_write[to_write%in%c('HSC_high', 'MPP_high', 'MPPI_high', 'MPPII_high')] <- 'D
 # Differentiation uMAP (Figure 1c) ----------------------------------------------
 # We simply load the data and visualize the integrated uMAP that shows three differentiation trajectories.
 seurat_obj <- readRDS('data/larry_seurat.rds') #readRDS(url('https://figshare.com/ndownloader/files/42479346'))
+
+###### Save the Fig 1c source data ###########
+out_path_c <- "csv/coble_fig1c_sourcedata.csv"
+umap_coords_c <- Embeddings(seurat_obj, "umap")
+out_df_c <- data.frame(umap_coords_c, CellType = seurat_obj$CellType)
+colnames(out_df_c) <- c("umap_1", "umap_2", "CellType")
+write.csv(out_df_c, out_path_c, row.names = TRUE)
+cat("saved to", out_path_c, "\n")
+###############################################
+
 p <- DimPlot(seurat_obj,
   group.by = "CellType",reduction="umap", pt.size=1.2) +
   ggtitle("") +
@@ -47,7 +60,17 @@ larry <- subset(full_seurat, Experiment == "LARRY main experiment")
 usecpg <- rownames(larry)
 larry <- ScaleData(larry, assay = "DNAm", features = usecpg, verbose = F)
 larry <- RunPCA(larry, assay = "DNAm", features = usecpg, reduction.name = "pca", reduction.key = "PC_", npcs = 100, verbose = F)
-larry <- RunUMAP(larry, reduction = "pca", dims = 1:50, verbose = F, seed.use = 1953)
+larry <- RunUMAP(larry, reduction = "pca", dims = 1:50, verbose = F, seed.use = 1953, n.threads = 1)
+
+###### Save the Fig 1g source data ###########
+out_path_g <- "csv/coble_fig1g_sourcedata.csv"
+umap_coords_g <- Embeddings(larry, "umap")
+out_df_g <- data.frame(umap_coords_g, CellType = larry$CellType)
+colnames(out_df_g) <- c("umap_1", "umap_2", "CellType")
+write.csv(out_df_g, out_path_g, row.names = TRUE)
+cat("saved to", out_path_g, "\n")
+###############################################
+
 celltypeColors <- c("HSC/MPP1"="maroon4",
                     "MPP2" ="darkgrey",
                     "MPP3" = "darkblue",
@@ -139,6 +162,12 @@ to_plot <- data.frame(PVal=min_pval,
                       AvgMeth=avg_meth_rate,
                       PValClone=pvals_cloneass)
 
+###### Save the Fig 1i source data ###########
+out_path_i <- "csv/coble_fig1i_sourcedata.csv"
+write.csv(to_plot, out_path_i, row.names = TRUE)
+cat("saved to", out_path_i, "\n")
+###############################################
+
 p <- ggplot(to_plot, aes(x = AvgMeth, y = log10(ifelse(PVal<1e-21, 1e-21, PVal)), color = -log10(PValClone+1e-50)))+
   geom_point(size=2.0, stroke=.5)+
   geom_hline(yintercept = log10(thr.protein.ass)) + geom_vline(xintercept = c(lower.thr.methrate,upper.thr.methrate)) +
@@ -177,6 +206,13 @@ to_plot_static <- plyr::count(plot_dat[plot_dat$Type=='static', ])
 to_plot_dynamic$freq <- to_plot_dynamic$freq/sum(to_plot_dynamic$freq)
 to_plot_static$freq <- to_plot_static$freq/sum(to_plot_static$freq)
 to_plot <- rbind(to_plot_dynamic, to_plot_static)
+
+###### Save the Fig 1j source data ###########
+out_path_j <- "csv/coble_fig1j_sourcedata.csv"
+write.csv(to_plot, out_path_j, row.names = FALSE)
+cat("saved to", out_path_j, "\n")
+###############################################
+
 fisher.p <- fisher.test(table(plot_dat[plot_dat$ChromState!='Other', c('Type', 'ChromState')]))
 p <- ggplot(to_plot, aes(x=Type, y=freq*100, fill=ChromState))+geom_bar(stat = 'identity')+
     plot_theme_legend+scale_fill_manual(values=cols_chrom)+

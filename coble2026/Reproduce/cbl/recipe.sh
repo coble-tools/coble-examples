@@ -2,9 +2,10 @@
 
 #####################################################
 # COBLE:recipe, (c) ICR 2026
-# Capture date: 2026-09-20
-# Capture time: 14:19:15 BST
+# Capture date: 2026-09-21
+# Capture time: 16:31:42 BST
 # Captured by: rachel.alcraft
+# Captured on: 35605BRKLT
 #####################################################
 # source bashrc for conda
 if [ -f ~/.bash_profile ]; then source ~/.bash_profile; elif [ -f ~/.bashrc ]; then source ~/.bashrc; elif command -v conda > /dev/null 2>&1; then eval "$(conda shell.bash hook)"; fi
@@ -27,19 +28,25 @@ conda activate scherer-rep
 export PYTHONNOUSERSITE=1
 export | grep PYTHONNOUSERSITE
 # Channels section
-conda config --env --show channels | grep -q 'channels:' && conda config --env --remove-key channels || true
+conda config --env --remove-key channels 2>/dev/null || true
 conda config --env --set channel_priority strict
 conda config --env --add channels bioconda
 conda config --env --add channels conda-forge
 
 # INSTALL SECTION FOR CONDA
-#######################################
-# coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --rebuild
-# coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --containers docker,singularity --validate validate.sh
-#######################################
+#^######################################
+#^ coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --rebuild
+#^ coble build --recipe Figure02/cbl/recipe.cbl --env scherer-rep --containers docker,singularity --validate validate.sh
+#^######################################
+# coble:
+# coble: environment: scherer-rep
 # comments:
-# compilers:
-# Flag: Directive: cran-repo, Value: 
+
+
+# flags:
+# Flag: Directive: cran-repo, Value: https://packagemanager.posit.co/cran/2025-10-10
+Rscript -e 'options(repos=c(CRAN="https://packagemanager.posit.co/cran/2025-10-10"))'
+
 # conda:
 conda install -y --solver=libmamba --no-update-deps \
 r-base=4.2.2 
@@ -93,6 +100,6 @@ chmod +x ${CONDA_PREFIX}/bin/validate.sh
 chmod +x ${CONDA_PREFIX}/bin/validate.sh
 mkdir -p ${CONDA_PREFIX}/coble-recipe
 cp Reproduce/cbl/recipe.cbl ${CONDA_PREFIX}/coble-recipe
-cp /Users/rachel.alcraft/miniforge3/envs/r_452/bin/coble ${CONDA_PREFIX}/bin/
-cp /Users/rachel.alcraft/miniforge3/envs/r_452/bin/coble-* ${CONDA_PREFIX}/bin/
+cp /Users/rachel.alcraft/miniforge3/bin/coble ${CONDA_PREFIX}/bin/
+cp /Users/rachel.alcraft/miniforge3/bin/coble-* ${CONDA_PREFIX}/bin/
 

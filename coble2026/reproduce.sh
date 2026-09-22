@@ -6,7 +6,7 @@ ENV_NAME="scherer-rep"
 SING_NAME="../cbl-scherer-rep.sif"
 ENV_MODE=$1
 source ~/.bashrc
-cd Fig2_PanelB
+cd Reproduce
 
 # Download data needed for the scripts
 echo "### 1a. Downloading data from figshare and saving to data/ directory"

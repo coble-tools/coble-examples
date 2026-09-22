@@ -30,9 +30,10 @@ options(bitmapType='cairo')
 # specify paths and load functions
 # -------------------------------------
 cat("[", format(Sys.time()), "] ### specify paths to data, program and results directories in the code and source the utility functions\n")
-DATA_DIR <- "data"        # SPECIFY HERE
-PROG_DIR <- "code"     # SPECIFY HERE
-RES_DIR  <- "results"      # SPECIFY HERE
+DATA_DIR <- "data"        
+PROG_DIR <- "code"    
+RES_DIR  <- "results"      
+SRC_DIR  <- "sourcedata"     
 source(file.path(PROG_DIR,'util.R'))
 # -------------------------------------
 # Load data to take into account diffferent runs and checkpointing
@@ -102,7 +103,7 @@ cls_id<-factor(colnames(z_1000_11)[test])
 tdf_n_1000$cls_id<-cls_id
 ################### save tsne source data ################
 cat("[", format(Sys.time()), "] ### saving tsne source data\n")
-out_path_tsne <- file.path(RES_DIR, "coble_fig3j_sourcedata.csv")
+out_path_tsne <- file.path(SRC_DIR, "coble_fig3j_sourcedata.csv")
 out_df_tsne <- data.frame(tsne_1 = tdf_n_1000$X1, tsne_2 = tdf_n_1000$X2, CellType = tdf_n_1000$cls_id)
 rownames(out_df_tsne) <- rownames(tdf_n_1000)
 write.csv(out_df_tsne, out_path_tsne, row.names = TRUE)

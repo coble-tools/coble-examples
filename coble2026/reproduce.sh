@@ -11,6 +11,7 @@ cd Reproduce
 # Download data needed for the scripts
 echo "### 1a. Downloading data from figshare and saving to data/ directory"
 mkdir -p data
+mkdir -p results
 if [[ ! -f "data/larry_seurat.rds" ]]; then
     curl -L -o data/larry_seurat.rds 'https://api.figshare.com/v2/file/download/42479346'
 else
@@ -27,6 +28,7 @@ fi
 if [ "$ENV_MODE" = "singularity" ] || [ "$ENV_MODE" = "apptainer" ]; then
     echo "### 2. Running in $ENV_MODE env ###"
     $ENV_MODE exec $SING_NAME Rscript code/fig1.R
+    # singularity exec cbl-scherer-rep.sif Rscript code/fig1.R
 else
     echo "### 2. Running in conda env ###"
     conda activate $ENV_NAME

@@ -1,0 +1,47 @@
+==============================================
+UMAP reproduction comparison report
+generated: 2026-09-22 21:05:21
+==============================================
+
+INPUT FILES
+  published source data: sourcedata/origin_fig1g_sourcedata.csv
+  reproduced data: sourcedata/coble_fig1g_sourcedata.csv
+
+CELL COUNTS
+  source data cells: 13885
+  reproduced cells: 13885
+  common cells used in comparison: 13885
+
+------------------------------------------------
+MAIN STATISTICS  (most important number first)
+------------------------------------------------
+
+*** protest correlation: 0.9673 ***
+    p-value: 0.001 (999 permutations)
+  THIS IS THE MOST IMPORTANT NUMBER. it is a correlation-like
+  statistic on a 0-1 scale (like Pearson's r) measuring how well
+  the two shapes align after the best-fit rotation/scale/translation,
+  tested against random permutations of the data. closer to 1 means
+  stronger agreement. the p-value tells you whether this alignment
+  is better than chance (below 0.05 means yes, reliably).
+
+Procrustes sum of squares: 17967.004072
+  what it is: total squared distance between the two point sets
+  after the best-fit rotation, scaling and translation. lower is
+  more similar. not directly comparable across datasets with
+  different scale or cell counts. mainly useful as the raw number
+  RMSE below is calculated from.
+
+RMSE: 1.137535 coordinate units
+  coordinate range (max - min of source umap): 14.698338
+  RMSE as % of coordinate range: 1.137535 / 14.698338 x 100 = 7.74 %
+  what it is: root mean squared error per cell (average positional
+  offset), expressed as a percentage of the coordinate range so it
+  can be compared across runs regardless of the plot's absolute scale.
+
+------------------------------------------------
+OUTPUT FILES
+------------------------------------------------
+  sourcedata/procrustes_sourcedata.png - alignment/residual plot
+  sourcedata/sourcedata_side_by_side.png - raw umap scatter comparison
+

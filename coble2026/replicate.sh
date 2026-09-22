@@ -8,6 +8,7 @@ cd Replicate
 
 echo "### 1. Downloading data from 10xgenomics and saving to data/ directory"
 mkdir -p data
+mkdir -p results
 if [[ ! -f "data/pbmc68k_data.rds" ]]; then
     wget -O data/pbmc68k_data.rds https://cf.10xgenomics.com/samples/cell/pbmc68k_rds/pbmc68k_data.rds
 fi

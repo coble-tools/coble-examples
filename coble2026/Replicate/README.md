@@ -2,7 +2,7 @@
 `different inputs, different team `  
 Given a guidance from the publication, create a new environment with amended code to generate the same results.   
 
-*Zheng, G., Terry, J., Belgrader, P. et al. Massively parallel digital transcriptional profiling of single cells. Nat Commun 8, 14049 (2017). https://doi.org/10.1038/ncomms14049*  
+*Zheng, G., Terry, J., Belgrader, P. et al. Massively parallel digital transcriptional profiling of single cells. Nat Commun 8, 14049 (2017). (https://doi.org/10.1038/ncomms14049)[https://doi.org/10.1038/ncomms14049]*  
 
 Publication link: https://www.nature.com/articles/ncomms14049
 Supplementary link: https://static-content.springer.com/esm/art%3A10.1038%2Fncomms14049/MediaObjects/41467_2017_BFncomms14049_MOESM828_ESM.pdf

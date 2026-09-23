@@ -23,7 +23,7 @@ to_write[to_write%in%c('HSC_high', 'MPP_high', 'MPPI_high', 'MPPII_high')] <- 'D
 seurat_obj <- readRDS('data/larry_seurat.rds') #readRDS(url('https://figshare.com/ndownloader/files/42479346'))
 
 ###### Save the Fig 1c source data ###########
-out_path_c <- "csv/coble_fig1c_sourcedata.csv"
+out_path_c <- "sourcedata/coble_fig1c_sourcedata.csv"
 umap_coords_c <- Embeddings(seurat_obj, "umap")
 out_df_c <- data.frame(umap_coords_c, CellType = seurat_obj$CellType)
 colnames(out_df_c) <- c("umap_1", "umap_2", "CellType")

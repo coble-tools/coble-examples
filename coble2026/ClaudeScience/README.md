@@ -1,4 +1,4 @@
-# Claude Science Reproduction of Bach et al
+# Claude Science attempts at Bach et al
 
 Given this prompt:
 
@@ -14,6 +14,8 @@ Given this prompt:
 > https://www.nature.com/articles/s41467-021-21783-3
 
 The coble recipe and the code scripts were created by Claude Science and run by me on my local machine - fully runnable environment from the coble definition and the Claude Science code scripts ran without error.
+
+My comments on what Claude Science came up with: 
 
 Everything below is written by Claude Science and all other files in this folder are created by Claude Science.
 
